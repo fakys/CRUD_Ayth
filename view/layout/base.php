@@ -8,12 +8,12 @@
     <link rel="stylesheet" href="<?=$this->asset('css/bootstrap.css')?>">
     <link rel="stylesheet" href="<?=$this->asset('css/app.bundle.css')?>">
     <link rel="stylesheet" href="<?=$this->asset('css/style.css')?>">
-    <title>Document</title>
+    <title><?=$this->title?></title>
 </head>
 <body>
 <div class="bg-primary p-1 header">
     <div class="logo">
-        <a href="#">
+        <a href="<?=$this->route('index')?>">
             Posts
         </a>
     </div>

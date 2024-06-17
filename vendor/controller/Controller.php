@@ -1,6 +1,7 @@
 <?php
 namespace vendor\controller;
 
+use vendor\router\Router;
 use vendor\traits\create_object;
 
 class Controller
@@ -66,5 +67,15 @@ class Controller
     {
         $asset = "../../assets/$path";
         return $asset;
+    }
+    public function route($name)
+    {
+        $url = Router::object()->get_url($name);
+        return "index.php?url=$url";
+    }
+    public function redirect($name)
+    {
+        $url = Router::object()->get_url($name);
+        return header("Location: index.php?url=$url");
     }
 }

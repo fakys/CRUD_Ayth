@@ -13,21 +13,20 @@
             <div class="panel-container show">
                 <div class="panel-content">
                     <div class="fs-lg fw-300 p-5 bg-white border-faded rounded mb-g">
+                        <?php foreach ($this->posts as $value):?>
                         <div>
-                            <h3>Первый заголовок статьи</h3>
-                            <p>
-                                Описание для статьи, чтобы рассказать о чем будет в статье в кратце. Здесь абсолютно комфортно вы можете генерировать тексты-«рыбы» для решения задач в области макетирования.
-                                <br><br>
-                                Мы будем постепенно расширять функциональность нашего сайта и ждем с нетерпением ваших отзывов.Присылайте нам ваши рыбные тексты! Мы будем рады!
-                            </p>
+                            <div><?=$value->title?></div>
+                            <div><?=$value->content?></div>
                             <div class="d-flex gap-10">
                                 <a href="#" class="btn btn-info ml-auto">Просмотр</a>
                                 <a href="#" class="btn btn-warning">Редактирование</a>
                                 <a href="#" class="btn btn-danger">Удаление</a>
                             </div>
+                            <hr>
                         </div>
+                        <?php endforeach;?>
                     </div>
-                    <a href="#" class="btn btn-success">Добавить статью</a>
+                    <a href="<?=$this->route('add_post')?>" class="btn btn-success">Добавить статью</a>
                 </div>
             </div>
         </div>

@@ -69,7 +69,8 @@ class Model
     private function add_data($data)
     {
         $class_name = get_called_class();
-        return $class_name::object()->fill_data($data);
+        $obj = new $class_name;
+        return $obj->fill_data($data);
     }
     private function clear_sql()
     {
@@ -219,6 +220,7 @@ class Model
 
     public static function create(array $value)
     {
+
         return self::get_objects()->create_object($value);
     }
     public static function update(array $set, array $where = [])

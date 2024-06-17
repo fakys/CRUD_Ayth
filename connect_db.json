@@ -1,6 +1,6 @@
 {
   "db_host": "localhost",
-  "data_base": "orm_test",
+  "data_base": "crud",
   "user_name": "root",
   "password": "",
   "encoding": "utf8"

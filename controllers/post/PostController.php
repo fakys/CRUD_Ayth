@@ -1,6 +1,7 @@
 <?php
 namespace controllers\post;
 
+use models\Post;
 use vendor\controller\Controller;
 
 class PostController extends Controller
@@ -9,6 +10,11 @@ class PostController extends Controller
 
     public function add_post()
     {
-        return $this->render('post/add_post');
+        if ($_POST){
+            $post  = new Post($_POST);
+            $post->save();
+            return $this->redirect('index');
+        }
+        return $this->render('post/add_post', ['title'=>'Создание поста']);
     }
 }
