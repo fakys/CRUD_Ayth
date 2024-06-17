@@ -1,0 +1,7 @@
+{
+  "db_host": "localhost",
+  "data_base": "orm_test",
+  "user_name": "root",
+  "password": "",
+  "encoding": "utf8"
+}
