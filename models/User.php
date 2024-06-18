@@ -11,7 +11,7 @@ class User extends Model
     {
         return [
             'name'=>['required'],
-            'email'=>['required', 'email'],
+            'email'=>['required', 'email', 'unique'],
             'fio'=>['required'],
             'password'=>['required', 'equal'=>'password_confirm']
         ];

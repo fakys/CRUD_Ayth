@@ -2,6 +2,7 @@
 namespace controllers\post;
 
 use models\Post;
+use vendor\auth\Auth;
 use vendor\controller\Controller;
 
 class PostController extends Controller
@@ -10,6 +11,9 @@ class PostController extends Controller
 
     public function add_post()
     {
+        if(!Auth::auth_user()){
+            $this->redirect('user.login');
+        }
         $post  = new Post();
         if ($_POST){
             $post->load($_POST);
@@ -22,6 +26,9 @@ class PostController extends Controller
     }
     public function update_post()
     {
+        if(!Auth::auth_user()){
+            $this->redirect('user.login');
+        }
         if(empty($_GET['id'])){
             $this->redirect('index');
         }
@@ -38,7 +45,9 @@ class PostController extends Controller
     }
     public function delete_post()
     {
-
+        if(!Auth::auth_user()){
+            $this->redirect('user.login');
+        }
         if(empty($_GET['id'])){
             $this->redirect('index');
         }

@@ -12,3 +12,4 @@ Router::get('/show_post', [PostController::class, 'show_post'], 'show_post');
 Router::get('/user/register', [UserController::class, 'register'], 'user.register');
 Router::get('/user/login', [UserController::class, 'login'], 'user.login');
 Router::get('/user/profile', [UserController::class, 'profile'], 'user.profile');
+Router::get('/user/logout', [UserController::class, 'logout'], 'user.logout');

@@ -35,3 +35,8 @@ p{
     color: red;
     font-size: 12px;
 }
+.image-container-header img{
+    width:40px;
+    height:40px;
+    border-radius: 60px;
+}

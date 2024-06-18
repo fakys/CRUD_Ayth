@@ -39,7 +39,7 @@ trait rules
             }
         }
     }
-    private function add_messages($field, $message)
+    public function add_messages($field, $message)
     {
         if(empty($this->messages[$field])){
             $this->messages[$field] = $message;
@@ -78,6 +78,17 @@ trait rules
             $this->unset_messages($field);
         }
     }
+    private function rule_unique($field)
+    {
+        if(isset($this->data[$field])){
+
+            if($this->where([$field=>$this->data[$field]])->one()->id){
+                $field_name = $this->check_label($field[0]);
+                $message = "Аккаунт с таким $field_name уже есть";
+                $this->add_messages($field, $message);
+            }
+        }
+    }
     private function rule_equal($field)
     {
 
@@ -99,6 +110,8 @@ trait rules
             $this->rule_required($field);
         }elseif ($rul == 'equal'){
             $this->rule_equal([$field,$param]);
+        }elseif ($rul == 'unique'){
+            $this->rule_unique($field);
         }
 
     }

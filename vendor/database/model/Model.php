@@ -243,7 +243,6 @@ class Model
     public function save()
     {
         $this->validate();
-        debug(231321);
         if(!$this->check_error()){
             if(self::check_object()){
                 return self::update($this->data);
