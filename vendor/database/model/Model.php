@@ -22,6 +22,7 @@ class Model
     {
         $this->db = ConnectDataBase::objects()->db_connect();
         $this->data = $data;
+        self::$object = $this;
     }
 
     public function __get($field)
@@ -52,13 +53,6 @@ class Model
         $query->execute();
         return $query->fetchAll();
     }
-
-
-
-
-
-
-
 
 
     public function fill_data($data)
@@ -202,10 +196,12 @@ class Model
     {
         if(!$where){
             $where = [$this->get_name_pk()=>$this->get_pk()];
+            $this->load_data($set);
+
         }
         $this->set_sql($this->get_sql()->update($set, $where));
         $this->query();
-        $this->where($where);
+
         return $this;
 
     }
@@ -217,7 +213,15 @@ class Model
         $this->set_sql($this->get_sql()->delete($where));
         $this->query();
     }
-
+    private function load_data($data)
+    {
+        foreach ($data as $key=>$val){
+            if(isset($this->data[$key])){
+                $this->data[$key] = $val;
+            }
+        }
+        return $this;
+    }
     public static function create(array $value)
     {
 
@@ -238,7 +242,7 @@ class Model
     public function save()
     {
         if(self::check_object()){
-            return self::update($this->data)->one();
+            return self::update($this->data);
         }else{
             if($this->data){
                 return self::create($this->data);
@@ -249,5 +253,9 @@ class Model
     public static function delete($where = [])
     {
         return self::get_objects()->delete_element($where);
+    }
+    public static function load($data)
+    {
+        return self::get_objects()->load_data($data);
     }
 }

@@ -68,14 +68,31 @@ class Controller
         $asset = "../../assets/$path";
         return $asset;
     }
-    public function route($name)
+    public function route($name, array $get=[])
     {
         $url = Router::object()->get_url($name);
-        return "index.php?url=$url";
+        $locate = "index.php?url=$url";
+        if($get){
+            $locate = $this->add_gets($locate, $get);
+        }
+        return $locate;
     }
-    public function redirect($name)
+
+    private function add_gets($locate, $get)
+    {
+        foreach ($get as $key=>$val){
+            $locate .= "&&$key=$val";
+        }
+        return $locate;
+    }
+    public function redirect(string $name, array $get=[])
     {
         $url = Router::object()->get_url($name);
-        return header("Location: index.php?url=$url");
+        $locate = "Location: index.php?url=$url";
+        if($get){
+            $locate = $this->add_gets($locate, $get);
+        }
+        header($locate);
+        die();
     }
 }

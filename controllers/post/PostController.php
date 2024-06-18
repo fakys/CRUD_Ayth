@@ -13,8 +13,22 @@ class PostController extends Controller
         if ($_POST){
             $post  = new Post($_POST);
             $post->save();
-            return $this->redirect('index');
+            $this->redirect('index');
         }
         return $this->render('post/add_post', ['title'=>'Создание поста']);
+    }
+    public function update_post()
+    {
+        if(empty($_GET['id'])){
+            $this->redirect('index');
+        }
+        $post = Post::pk($_GET['id']);
+        if($_POST){
+            $new_post = $post->load($_POST);
+            $new_post->save();
+            $this->redirect('index');
+        }
+
+        return $this->render('post/update_post', ['title'=>'Обновление поста', 'post'=>$post]);
     }
 }

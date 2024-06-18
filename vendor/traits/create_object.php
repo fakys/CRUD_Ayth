@@ -5,6 +5,7 @@ trait create_object
 {
     protected static function get_objects()
     {
+
         if(!self::$object){
             $new_class = get_called_class();
             self::$object = new $new_class();

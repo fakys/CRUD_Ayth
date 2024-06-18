@@ -19,7 +19,7 @@
                             <div><?=$value->content?></div>
                             <div class="d-flex gap-10">
                                 <a href="#" class="btn btn-info ml-auto">Просмотр</a>
-                                <a href="#" class="btn btn-warning">Редактирование</a>
+                                <a href="<?=$this->route('update_post', ['id'=>$value->id])?>" class="btn btn-warning">Редактирование</a>
                                 <a href="#" class="btn btn-danger">Удаление</a>
                             </div>
                             <hr>
