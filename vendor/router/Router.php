@@ -39,11 +39,13 @@ class Router
     private function get_urls_get()
     {
         if(isset($_GET['url']) && isset($this->urls_get[$_GET['url']])){
-            $controller =  $this->urls_get[$_GET['url']]['controller'][0];
-            $method = $this->urls_get[$_GET['url']]['controller'][1];
+            $array_controller = $this->urls_get[$_GET['url']]['controller'];
+            $controller =  $array_controller[0];
+            $method = $array_controller[1];
         }else{
-            $controller =  $this->urls_get['index'][0];
-            $method = $this->urls_get['index'][1];
+            $array_controller = $this->urls_get['index']['controller'];
+            $controller =  $array_controller[0];
+            $method = $array_controller[1];
         }
         return $controller::object()->$method();
     }

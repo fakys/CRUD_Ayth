@@ -10,12 +10,15 @@ class PostController extends Controller
 
     public function add_post()
     {
+        $post  = new Post();
         if ($_POST){
-            $post  = new Post($_POST);
-            $post->save();
-            $this->redirect('index');
+            $post->load($_POST);
+            if($post->validate()){
+                $post->create($_POST);
+                $this->redirect('index');
+            }
         }
-        return $this->render('post/add_post', ['title'=>'Создание поста']);
+        return $this->render('post/add_post', ['title'=>'Создание поста', 'post'=>$post]);
     }
     public function update_post()
     {
@@ -23,12 +26,41 @@ class PostController extends Controller
             $this->redirect('index');
         }
         $post = Post::pk($_GET['id']);
-        if($_POST){
-            $new_post = $post->load($_POST);
-            $new_post->save();
-            $this->redirect('index');
+        if($_POST && $post->id){
+            $post->load($_POST);
+            if($post->save()){
+                $this->redirect('index');
+            }
+
         }
 
         return $this->render('post/update_post', ['title'=>'Обновление поста', 'post'=>$post]);
+    }
+    public function delete_post()
+    {
+
+        if(empty($_GET['id'])){
+            $this->redirect('index');
+        }
+
+        $post = Post::pk($_GET['id']);
+
+        if($post->id){
+
+            $post->delete();
+        }
+        $this->redirect('index');
+    }
+    public function show_post()
+    {
+        if(empty($_GET['id'])){
+            $this->redirect('index');
+        }
+        $post = Post::pk($_GET['id']);
+
+        if($post->id){
+            return $this->render('post/show_post', ['title'=>'Просмотр поста', 'post'=>$post]);
+        }
+        $this->redirect('index');
     }
 }

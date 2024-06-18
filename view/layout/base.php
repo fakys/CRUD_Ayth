@@ -18,10 +18,10 @@
         </a>
     </div>
     <div class="link-header">
-        <a href="#">
+        <a href="<?=$this->route('user.login')?>">
             Войти
         </a>
-        <a href="#">
+        <a href="<?=$this->route('user.register')?>">
             Регистрация
         </a>
     </div>

@@ -1,3 +1,10 @@
+div{
+    font-size: 14px;
+}
+p{
+    font-size: 14px;
+}
+
 .logo a{
     color: white;
     font-size: 30px;
@@ -23,4 +30,8 @@
 .link-header a:hover{
     color: white;
     text-decoration: underline;
+}
+.error{
+    color: red;
+    font-size: 12px;
 }

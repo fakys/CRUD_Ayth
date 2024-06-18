@@ -182,7 +182,7 @@ class StringSql
 
     public function string_delete($where)
     {
-        $this->sql = "DELETE FROM `users`";
+        $this->sql = "DELETE FROM {$this->table_name}";
         self::where($where);
         return $this;
     }

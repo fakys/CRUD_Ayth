@@ -4,12 +4,14 @@ namespace vendor\database\model;
 
 use vendor\database\ConnectDataBase;
 use PDO;
+use vendor\database\model\traits\rules;
 use vendor\string\StringSql;
 use vendor\traits\create_object;
 
 class Model
 {
     use create_object;
+    use rules;
     protected $db;
     protected static $table_name;
     private array $data;
@@ -17,6 +19,7 @@ class Model
     protected $pk;
     protected array $fields = [];
     private $sql;
+    protected $fillable = [];
 
     public function __construct(array $data = [])
     {
@@ -159,7 +162,6 @@ class Model
     private function get_element_by_pk($pk)
     {
         $this->set_sql($this->get_sql()->pk([$this->get_name_pk()=>$pk]));
-
         $this->query();
         return $this->one();
     }
@@ -184,7 +186,10 @@ class Model
         }
         return null;
     }
-
+    public function unset_data($field)
+    {
+        unset($this->data[$field]);
+    }
     private function create_object($value)
     {
         $this->get_sql()->create($value);
@@ -197,11 +202,9 @@ class Model
         if(!$where){
             $where = [$this->get_name_pk()=>$this->get_pk()];
             $this->load_data($set);
-
         }
         $this->set_sql($this->get_sql()->update($set, $where));
         $this->query();
-
         return $this;
 
     }
@@ -216,9 +219,7 @@ class Model
     private function load_data($data)
     {
         foreach ($data as $key=>$val){
-            if(isset($this->data[$key])){
-                $this->data[$key] = $val;
-            }
+            $this->data[$key] = $val;
         }
         return $this;
     }
@@ -241,14 +242,20 @@ class Model
     }
     public function save()
     {
-        if(self::check_object()){
-            return self::update($this->data);
-        }else{
-            if($this->data){
-                return self::create($this->data);
+        $this->validate();
+        debug(231321);
+        if(!$this->check_error()){
+            if(self::check_object()){
+                return self::update($this->data);
+            }else{
+                if($this->data){
+
+                    return self::create($this->data);
+                }
+                return $this;
             }
-            return $this;
         }
+        return false;
     }
     public static function delete($where = [])
     {
@@ -257,5 +264,9 @@ class Model
     public static function load($data)
     {
         return self::get_objects()->load_data($data);
+    }
+    public function toArray()
+    {
+        return $this->data;
     }
 }
